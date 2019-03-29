@@ -11,7 +11,17 @@
 	  		<p:panel header="Modelos">
 	  		
 	  			<h:form>
-	  			<h:inputHidden />
+	  			<!-- Linguagem de Expressão - EL #{} - consegue chamar um controller -->
+	  			<h:inputHidden value="#{modeloController.modelo.idModelo}" />
+	  			
+	  			<!-- Grid Invisivel -->
+	  			<h:panelGrid columns="2">
+	  			<p:outputLabel value="Descrição:"/>
+	  			<p:inputText value="#{modeloController.modelo.descricao}"/>
+	  			<p:outputLabel value="Marca:" />
+	  			<p:selectOneMenu value="#{modeloController.modelo.marca}" filter="true">
+	  			</p:selectOneMenu>
+	  			</h:panelGrid>
 	  			</h:form>
 	  			
 	  		</p:panel>

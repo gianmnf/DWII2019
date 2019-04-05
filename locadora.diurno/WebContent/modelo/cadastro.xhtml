@@ -14,6 +14,8 @@
 			
 				<h:form>
 				
+					<p:growl />
+				
 					<h:inputHidden value="#{modeloController.modelo.idModelo}"  />
 				
 					<h:panelGrid columns="2">
@@ -23,7 +25,8 @@
 					
 						<p:outputLabel value="Marca:" />
 						<p:selectOneMenu value="#{modeloController.modelo.marca}" 
-										 filter="true">
+										 filter="true"
+										 converter="entityConverter">
 							
 							<f:selectItems value="#{marcaController.todas()}" 
 										   var="marca"
@@ -33,7 +36,31 @@
 						</p:selectOneMenu>
 					
 					</h:panelGrid>
-				
+					
+					<p:commandButton value="Salvar"
+									 actionListener="#{modelController.salvar()}"
+									 update="@form"/>
+					<!-- Action - Retorna página/string ActionListener - Fica na mesma página Update = Ajax -->
+					
+					<!-- Tabela para mostrar dados -->
+					<p:dataTable value="#{modeloController.todos()}"
+								 var="modelo"
+								 paginator="true"
+								 rows="10"
+								 emptyMessage="Nenhum modelo foi cadastrado">
+								 
+								<p:column headerText="Código">
+									#{modelo.idModelo}
+								</p:column>
+								
+								<p:column headerText="Descrição">
+									#{modelo.descricao}
+								</p:column>
+						
+								<p:column headerText="Marca">
+									#{modelo.marca.descricao}
+								</p:column>
+					</p:dataTable>
 				</h:form>			
 			
 			</p:panel>	  		

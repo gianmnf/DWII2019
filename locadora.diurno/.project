@@ -3,6 +3,8 @@
 	<name>locadora.diurno</name>
 	<comment></comment>
 	<projects>
+		<project>locadora.diurno.dal</project>
+		<project>locadora.diurno.bll</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

@@ -37,17 +37,17 @@
 					
 					</h:panelGrid>
 					
-					<p:commandButton value="Salvar"
-									 actionListener="#{modelController.salvar()}"
-									 update="@form"/>
-					<!-- Action - Retorna página/string ActionListener - Fica na mesma página Update = Ajax -->
 					
-					<!-- Tabela para mostrar dados -->
+					<p:commandButton value="Salvar"
+									 actionListener="#{modeloController.salvar()}"
+									 update="@form"/>
+								
+									 
 					<p:dataTable value="#{modeloController.todos()}"
 								 var="modelo"
 								 paginator="true"
 								 rows="10"
-								 emptyMessage="Nenhum modelo foi cadastrado">
+								 emptyMessage="Nenhum modelo foi cadastrado.">
 								 
 								<p:column headerText="Código">
 									#{modelo.idModelo}
@@ -55,12 +55,31 @@
 								
 								<p:column headerText="Descrição">
 									#{modelo.descricao}
-								</p:column>
-						
+								</p:column> 
+								
 								<p:column headerText="Marca">
 									#{modelo.marca.descricao}
 								</p:column>
+								
+								<!-- Adicionando coluna Editar -->
+								<p:column headerText="Editar">
+									<!-- Botão para executar ação - invocando controlador -->
+									<!-- process - Processar só o mesmo -->
+									<p:commandButton value="Editar" actionListener="#{modeloController.editar(modelo)}"
+									process="@this"
+									update="@form"></p:commandButton>
+								</p:column>
+								
+								<!-- Adicionando coluna Excluir -->
+								<p:column headerText="Excluir">
+									<p:commandButton value="Excluir" actionListener="#{modeloController.excluir(modelo.idModelo)}"
+									process="@this"
+									update="@form"></p:commandButton>
+								</p:column>					
+					
 					</p:dataTable>
+					
+				
 				</h:form>			
 			
 			</p:panel>	  		

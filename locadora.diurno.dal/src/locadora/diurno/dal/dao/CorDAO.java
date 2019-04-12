@@ -7,10 +7,8 @@ import locadora.diurno.dal.generics.*;
 import javax.enterprise.context.*;
 
 @RequestScoped
-public class MarcaDAO 
-	extends JPAGenericDAO<Marca, Short>
-	implements IMarcaDAO{
+public class CorDAO 
+	extends JPAGenericDAO<Cor, Short>
+	implements ICorDAO{
 
-
-	
 }

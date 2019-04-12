@@ -16,28 +16,28 @@ import javax.faces.application.*;
 
 @Named
 @RequestScoped
-public class ModeloController {
+public class CorController {
 
-	private Modelo modelo;
+	private Cor cor;
 	
 	@EJB
-	private IModeloEJB modeloEJB;
+	private ICorEJB corEJB;
 	
 	@Inject
 	private FacesContext context;
 	
-	public ModeloController() {
-		this.modelo = new Modelo();
+	public CorController() {
+		this.cor = new Cor();
 	}
 	
 	//Editar
-	public void editar(Modelo modelo) {
-		this.modelo = modelo;
+	public void editar(Cor cor) {
+		this.cor = cor;
 	}
 		
 	//Excluir
-	public void excluir(Short idModelo) {
-		Mensagem msg = modeloEJB.excluir(idModelo);
+	public void excluir(Short idCor) {
+		Mensagem msg = corEJB.excluir(idCor);
 		if(msg.getStatus() == MensagemStatus.sucesso) {
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, msg.getTexto(), null));
 		}else {
@@ -48,7 +48,7 @@ public class ModeloController {
 	
 	public void salvar() {
 		
-		Mensagem msg = modeloEJB.salvar(modelo);
+		Mensagem msg = corEJB.salvar(cor);
 		
 		if(msg.getStatus() == MensagemStatus.sucesso) {
 			
@@ -56,7 +56,7 @@ public class ModeloController {
 					new FacesMessage(FacesMessage.SEVERITY_INFO,
 							msg.getTexto(), null));
 			
-			this.modelo = new Modelo();
+			this.cor = new Cor();
 			
 		}else {
 			context.addMessage(null, 
@@ -65,22 +65,16 @@ public class ModeloController {
 		}
 	}
 	
-	public List<Modelo> todos(){
-		return modeloEJB.obterTodos();
+	public List<Cor> todos(){
+		return corEJB.obterTodos();
 	}
 
-	public Modelo getModelo() {
-		return modelo;
+	public Cor getCor() {
+		return cor;
 	}
 
-	public void setModelo(Modelo modelo) {
-		this.modelo = modelo;
+	public void setCor(Cor cor) {
+		this.cor = cor;
 	}
-	
-	
-	
-	
-	
-	
-	
+
 }

@@ -18,29 +18,45 @@
                <p:inputText value="#{automovelController.automovel.valor}"/>
             </h:panelGrid>
             <p:outputLabel value="Combustivel:" />
-						<p:selectOneMenu value="#{combustivelController.descricao}" 
+						<p:selectOneMenu value="#{combustivelController.combustivel.descricao}" 
 										 filter="true"
 										 converter="entityConverter">
 							
-							<f:selectItems value="#{marcaController.todas()}" 
-										   var="marca"
-										   itemLabel="#{marca.descricao}"
-										   itemValue="#{marca}" />
+							<f:selectItems value="#{combustivelController.todos()}" 
+										   var="combustivel"
+										   itemLabel="#{combustivel.descricao}"
+										   itemValue="#{combustivel}" />
 							
 						</p:selectOneMenu>
-            <h:panelGrid columns="2">
-               <p:outputLabel value="Combustível"/>
-               <p:inputText value="#{automovelController.automovel.combustivel.descricao}"/>
-            </h:panelGrid>
-            <h:panelGrid columns="2">
-               <p:outputLabel value="Combustível"/>
-               <p:inputText value="#{automovelController.automovel.cor.descricao}"/>
-            </h:panelGrid>
-            <h:panelGrid columns="2">
-               <p:outputLabel value="Combustível"/>
-               <p:inputText value="#{automovelController.automovel.modelo.descricao}"/>
-            </h:panelGrid>
-            
+			<p:separator />
+			<p:outputLabel value="Cor:" />
+						<p:selectOneMenu value="#{corController.cor.descricao}" 
+										 filter="true"
+										 converter="entityConverter">
+							
+							<f:selectItems value="#{corController.todos()}" 
+										   var="cor"
+										   itemLabel="#{cor.descricao}"
+										   itemValue="#{cor}" />
+							
+						</p:selectOneMenu>
+			<p:separator />
+			<p:outputLabel value="Modelo:" />
+						<p:selectOneMenu value="#{modeloController.modelo.descricao}" 
+										 filter="true"
+										 converter="entityConverter">
+							
+							<f:selectItems value="#{modeloController.todos()}" 
+										   var="modelo"
+										   itemLabel="#{modelo.descricao}"
+										   itemValue="#{modelo}" />
+							
+						</p:selectOneMenu> 
+			<p:separator />
+			<h:panelGrid columns="2">
+               <p:outputLabel value="Qtde. Portas"/>
+               <p:inputText value="#{automovelController.automovel.quantidadePortas}"/>
+            </h:panelGrid>           
             <p:commandButton value="Salvar" actionListener="#{automovelController.salvar()}" update="@form"/>
             <p:dataTable value="#{automovelController.todos()}"
                var="automovel"
@@ -48,18 +64,33 @@
                rows="10"
                emptyMessage="Nenhum automovel foi cadastrado.">
                <p:column headerText="Código">
-                  #{combustivel.idCombustivel}
+                  #{automovel.idAutomovel}
                </p:column>
-               <p:column headerText="Descrição">
-                  #{combustivel.descricao}
+               <p:column headerText="Modelo">
+                  #{automovel.modelo.descricao}
+               </p:column>
+               <p:column headerText="Ano">
+                  #{automovel.ano}
+               </p:column>
+               <p:column headerText="Valor">
+                  #{automovel.valor}
+               </p:column>
+               <p:column headerText="Tipo Combustivel">
+                  #{automovel.combustivel.descricao}
+               </p:column>
+               <p:column headerText="Cor">
+                  #{automovel.cor.descricao}
+               </p:column>
+               <p:column headerText="Qtde. Portas">
+                  #{automovel.quantidadePortas}
                </p:column>
                <p:column headerText="Editar">
-                  <p:commandButton value="Editar" actionListener="#{combustivelController.editar(combustivel)}"
+                  <p:commandButton value="Editar" actionListener="#{automovelController.editar(automovel)}"
                      process="@this"
                      update="@form"></p:commandButton>
                </p:column>
                <p:column headerText="Excluir">
-                  <p:commandButton value="Excluir" actionListener="#{combustivelController.excluir(combustivel.idCombustivel)}"
+                  <p:commandButton value="Excluir" actionListener="#{automovelController.excluir(automovel.idAutomovel)}"
                      process="@this"
                      update="@form"></p:commandButton>
                </p:column>

@@ -1,6 +1,6 @@
 package locadora.diurno.controller;
 
-import javax.enterprise.context.*;				
+import javax.enterprise.context.*;					
 import javax.ejb.*;
 
 import locadora.diurno.bll.interfaces.*;

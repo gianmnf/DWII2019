@@ -2,7 +2,7 @@ package locadora.diurno.bll;
 
 import locadora.diurno.bll.interfaces.*;				
 import locadora.diurno.bll.util.*;
-import locadora.diurno.dal.dao.interfaces.IOpcionalDAO;
+import locadora.diurno.dal.dao.interfaces.IAutomovelDAO;
 import locadora.diurno.dal.entidade.*;
 import java.util.*;
 
@@ -10,14 +10,15 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 @Stateless
-public class OpcionalEJB implements IOpcionalEJB {
+public class AutomovelEJB implements IAutomovelEJB{
 	@Inject
-	private IOpcionalDAO opcionalDAO;
+	private IAutomovelDAO automovelDAO;
 	
-	public Mensagem salvar(Opcional opcional) {
+	@Override
+	public Mensagem salvar(Automovel automovel) {
 
 		try {
-			opcionalDAO.insertOrUpdate(opcional);
+			automovelDAO.insertOrUpdate(automovel);
 		}catch(Exception ex) {
 			return new Mensagem("Ocorreu um erro inesperado: " 
 						+ ex.getMessage(),MensagemStatus.erro);
@@ -26,18 +27,19 @@ public class OpcionalEJB implements IOpcionalEJB {
 		return new Mensagem("Salvo com sucesso.", MensagemStatus.sucesso);
 	}
 
-	public Mensagem excluir(Short idOpcional) {
+	@Override
+	public Mensagem excluir(Short idAutomovel) {
 		
 		
 		try {
 			
-			Opcional opcional = obterPorId(idOpcional);
+			Automovel automovel = obterPorId(idAutomovel);
 			
-			if(opcional == null) {
-				throw new Exception("Opcional inexistente.");
+			if(automovel == null) {
+				throw new Exception("Automovel inexistente.");
 			}
 			
-			opcionalDAO.delete(opcional);
+			automovelDAO.delete(automovel);
 			
 		}catch(Exception ex) {
 			return new Mensagem("Não foi possível excluir: " 
@@ -49,12 +51,14 @@ public class OpcionalEJB implements IOpcionalEJB {
 		
 	}
 
-	public Opcional obterPorId(Short idOpcional) {
-		return opcionalDAO.findById(idOpcional);
+	@Override
+	public Automovel obterPorId(Short idAutomovel) {
+		return automovelDAO.findById(idAutomovel);
 	}
 
 
-	public List<Opcional> obterTodos() {
-		return opcionalDAO.findAll();
+	@Override
+	public List<Automovel> obterTodos() {
+		return automovelDAO.findAll();
 	}
 }

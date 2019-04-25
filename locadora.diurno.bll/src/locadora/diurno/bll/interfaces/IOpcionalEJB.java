@@ -5,7 +5,7 @@ import locadora.diurno.bll.util.*;
 import java.util.*;
 
 public interface IOpcionalEJB {
-	public Mensagem salvar(Opcional opcionall);
+	public Mensagem salvar(Opcional opcional);
 	
 	public Mensagem excluir(Short idOpcional);
 	

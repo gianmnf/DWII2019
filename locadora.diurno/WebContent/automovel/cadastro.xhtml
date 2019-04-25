@@ -1,0 +1,71 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition template="../layout.xhtml">
+   <ui:define name="conteudo">
+      <p:panel header="Automovel">
+         <h:form>
+            <p:growl />
+            <h:inputHidden value="#{automovelController.automovel.idAutomovel}"/>
+            <h:panelGrid columns="2">
+               <p:outputLabel value="Ano"/>
+               <p:inputText value="#{automovelController.automovel.ano}"/>
+            </h:panelGrid>
+            <h:panelGrid columns="2">
+               <p:outputLabel value="Valor"/>
+               <p:inputText value="#{automovelController.automovel.valor}"/>
+            </h:panelGrid>
+            <p:outputLabel value="Combustivel:" />
+						<p:selectOneMenu value="#{combustivelController.descricao}" 
+										 filter="true"
+										 converter="entityConverter">
+							
+							<f:selectItems value="#{marcaController.todas()}" 
+										   var="marca"
+										   itemLabel="#{marca.descricao}"
+										   itemValue="#{marca}" />
+							
+						</p:selectOneMenu>
+            <h:panelGrid columns="2">
+               <p:outputLabel value="Combustível"/>
+               <p:inputText value="#{automovelController.automovel.combustivel.descricao}"/>
+            </h:panelGrid>
+            <h:panelGrid columns="2">
+               <p:outputLabel value="Combustível"/>
+               <p:inputText value="#{automovelController.automovel.cor.descricao}"/>
+            </h:panelGrid>
+            <h:panelGrid columns="2">
+               <p:outputLabel value="Combustível"/>
+               <p:inputText value="#{automovelController.automovel.modelo.descricao}"/>
+            </h:panelGrid>
+            
+            <p:commandButton value="Salvar" actionListener="#{automovelController.salvar()}" update="@form"/>
+            <p:dataTable value="#{automovelController.todos()}"
+               var="automovel"
+               paginator="true"
+               rows="10"
+               emptyMessage="Nenhum automovel foi cadastrado.">
+               <p:column headerText="Código">
+                  #{combustivel.idCombustivel}
+               </p:column>
+               <p:column headerText="Descrição">
+                  #{combustivel.descricao}
+               </p:column>
+               <p:column headerText="Editar">
+                  <p:commandButton value="Editar" actionListener="#{combustivelController.editar(combustivel)}"
+                     process="@this"
+                     update="@form"></p:commandButton>
+               </p:column>
+               <p:column headerText="Excluir">
+                  <p:commandButton value="Excluir" actionListener="#{combustivelController.excluir(combustivel.idCombustivel)}"
+                     process="@this"
+                     update="@form"></p:commandButton>
+               </p:column>
+            </p:dataTable>
+         </h:form>
+      </p:panel>
+   </ui:define>
+</ui:composition>
+</html>

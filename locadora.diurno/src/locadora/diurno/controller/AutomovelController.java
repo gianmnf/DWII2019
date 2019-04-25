@@ -16,27 +16,27 @@ import javax.faces.application.*;
 
 @Named
 @RequestScoped
-public class CombustivelController {
-private Combustivel combustivel;
+public class AutomovelController {
+private Automovel automovel;
 	
 	@EJB
-	private ICombustivelEJB combustivelEJB;
+	private IAutomovelEJB automovelEJB;
 	
 	@Inject
 	private FacesContext context;
 	
-	public CombustivelController() {
-		this.combustivel = new Combustivel();
+	public AutomovelController() {
+		this.automovel = new Automovel();
 	}
 	
 	//Editar
-	public void editar(Combustivel combustivel) {
-		this.combustivel = combustivel;
+	public void editar(Automovel automovel) {
+		this.automovel = automovel;
 	}
 		
 	//Excluir
-	public void excluir(Short idCombustivel) {
-		Mensagem msg = combustivelEJB.excluir(idCombustivel);
+	public void excluir(Short idAutomovel) {
+		Mensagem msg = automovelEJB.excluir(idAutomovel);
 		if(msg.getStatus() == MensagemStatus.sucesso) {
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, msg.getTexto(), null));
 		}else {
@@ -47,7 +47,7 @@ private Combustivel combustivel;
 	
 	public void salvar() {
 		
-		Mensagem msg = combustivelEJB.salvar(combustivel);
+		Mensagem msg = automovelEJB.salvar(automovel);
 		
 		if(msg.getStatus() == MensagemStatus.sucesso) {
 			
@@ -55,7 +55,7 @@ private Combustivel combustivel;
 					new FacesMessage(FacesMessage.SEVERITY_INFO,
 							msg.getTexto(), null));
 			
-			this.combustivel = new Combustivel();
+			this.automovel = new Automovel();
 			
 		}else {
 			context.addMessage(null, 
@@ -64,15 +64,15 @@ private Combustivel combustivel;
 		}
 	}
 	
-	public List<Combustivel> todos(){
-		return combustivelEJB.obterTodos();
+	public List<Automovel> todos(){
+		return automovelEJB.obterTodos();
 	}
 
-	public Combustivel getCombustivel() {
-		return combustivel;
+	public Automovel getAutomovel() {
+		return automovel;
 	}
 
-	public void setCombustivel(Combustivel combustivel) {
-		this.combustivel = combustivel;
+	public void setAutomovel(Automovel automovel) {
+		this.automovel = automovel;
 	}
 }

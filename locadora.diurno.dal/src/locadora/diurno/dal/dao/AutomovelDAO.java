@@ -7,7 +7,7 @@ import locadora.diurno.dal.generics.*;
 import javax.enterprise.context.*;
 
 @RequestScoped
-public class CombustivelDAO extends JPAGenericDAO<Combustivel, Short>
-implements ICombustivelDAO{
+public class AutomovelDAO extends JPAGenericDAO<Automovel, Short>
+implements IAutomovelDAO{
 
 }

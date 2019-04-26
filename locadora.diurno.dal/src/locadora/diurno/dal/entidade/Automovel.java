@@ -36,6 +36,8 @@ public class Automovel {
 			inverseJoinColumns = @JoinColumn(name = "idOpcional"))
 	private List<Opcional> opcionais;
 
+	@OneToMany(mappedBy = "automovel")
+	private List<LocacaoAutomovel> locacaoAutomoveis;
 
 	public Integer getIdAutomovel() {
 		return idAutomovel;

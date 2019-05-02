@@ -12,5 +12,7 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="/locadora.diurno.test/eclipselink.jar"/>
+	<classpathentry kind="lib" path="/locadora.diurno.test/mysql-connector-java-5.1.23-bin.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

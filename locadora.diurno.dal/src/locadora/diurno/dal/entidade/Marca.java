@@ -1,6 +1,6 @@
 package locadora.diurno.dal.entidade;
 
-import javax.persistence.*;
+import javax.persistence.*;	
 import javax.validation.constraints.*;
 import java.util.*;
 

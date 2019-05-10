@@ -1,23 +1,24 @@
 package locadora.diurno.controller;
 
-import javax.enterprise.context.*;				
-import javax.ejb.*;
+import java.util.List;
 
-import locadora.diurno.bll.interfaces.*;
-import locadora.diurno.dal.entidade.*;
+import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+import javax.inject.Named;
 
-import javax.inject.*;
-
-import java.util.*;
-
-import locadora.diurno.bll.util.*;
-import javax.faces.context.*;
-import javax.faces.application.*;
+import locadora.diurno.bll.interfaces.IAutomovelEJB;
+import locadora.diurno.bll.util.Mensagem;
+import locadora.diurno.bll.util.TipoMensagem;
+import locadora.diurno.dal.entidade.Automovel;
 
 @Named
 @RequestScoped
 public class AutomovelController {
-private Automovel automovel;
+
+	private Automovel automovel;
 	
 	@EJB
 	private IAutomovelEJB automovelEJB;
@@ -29,45 +30,57 @@ private Automovel automovel;
 		this.automovel = new Automovel();
 	}
 	
-	//Editar
-	public void editar(Automovel automovel) {
-		this.automovel = automovel;
-	}
-		
-	//Excluir
-	public void excluir(Short idAutomovel) {
-		Mensagem msg = automovelEJB.excluir(idAutomovel);
-		if(msg.getStatus() == MensagemStatus.sucesso) {
-			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, msg.getTexto(), null));
-		}else {
-			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg.getTexto(), null));
-		}
-	}
-	
-	
 	public void salvar() {
 		
 		Mensagem msg = automovelEJB.salvar(automovel);
 		
-		if(msg.getStatus() == MensagemStatus.sucesso) {
+		if(msg.getTipo() == TipoMensagem.sucesso) {
 			
 			context.addMessage(null, 
 					new FacesMessage(FacesMessage.SEVERITY_INFO,
-							msg.getTexto(), null));
+							msg.getTexto(),null) );
 			
 			this.automovel = new Automovel();
 			
 		}else {
 			context.addMessage(null, 
 					new FacesMessage(FacesMessage.SEVERITY_ERROR,
-							msg.getTexto(), null));
+							msg.getTexto(),null) );
 		}
-	}
-	
-	public List<Automovel> todos(){
-		return automovelEJB.obterTodos();
+		
 	}
 
+	public List<Automovel> todos(){
+		return automovelEJB.listar();
+	}
+	
+	public void editar(Automovel automovel) {
+		this.automovel = automovel;
+	}
+	
+	
+	public void excluir(Integer idAutomovel) {
+		
+		Mensagem msg = automovelEJB.excluir(idAutomovel);
+		
+		if(msg.getTipo() == TipoMensagem.sucesso) {
+			
+			context.addMessage(null, 
+					new FacesMessage(FacesMessage.SEVERITY_INFO,
+							msg.getTexto(),null) );
+			
+		}else {
+			context.addMessage(null, 
+					new FacesMessage(FacesMessage.SEVERITY_ERROR,
+							msg.getTexto(),null) );
+		}
+		
+		
+	}
+
+	
+	
+	
 	public Automovel getAutomovel() {
 		return automovel;
 	}
@@ -75,4 +88,7 @@ private Automovel automovel;
 	public void setAutomovel(Automovel automovel) {
 		this.automovel = automovel;
 	}
+	
+	
+	
 }

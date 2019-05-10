@@ -1,60 +1,67 @@
 package locadora.diurno.bll;
 
-import locadora.diurno.bll.interfaces.*;				
-import locadora.diurno.bll.util.*;
-import locadora.diurno.dal.dao.interfaces.IOpcionalDAO;
-import locadora.diurno.dal.entidade.*;
-import java.util.*;
+import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
+import locadora.diurno.bll.interfaces.IOpcionalEJB;
+import locadora.diurno.bll.util.Mensagem;
+import locadora.diurno.bll.util.TipoMensagem;
+import locadora.diurno.dal.dao.interfaces.IOpcionalDAO;
+import locadora.diurno.dal.entidade.Opcional;;
+
 @Stateless
-public class OpcionalEJB implements IOpcionalEJB {
+public class OpcionalEJB implements IOpcionalEJB{
+
 	@Inject
 	private IOpcionalDAO opcionalDAO;
 	
+	@Override
 	public Mensagem salvar(Opcional opcional) {
-
-		try {
-			opcionalDAO.insertOrUpdate(opcional);
-		}catch(Exception ex) {
-			return new Mensagem("Ocorreu um erro inesperado: " 
-						+ ex.getMessage(),MensagemStatus.erro);
-		}
 		
-		return new Mensagem("Salvo com sucesso.", MensagemStatus.sucesso);
+		try {
+			
+			opcionalDAO.insertOrUpdate(opcional);
+			
+			return new Mensagem("Salvo com sucesso.",
+					TipoMensagem.sucesso);
+			
+		}catch(Exception ex) {
+			
+			return new Mensagem("Erro inesperado: " 
+					+ ex.getMessage(), TipoMensagem.erro);
+		}
 	}
 
+	@Override
 	public Mensagem excluir(Short idOpcional) {
-		
 		
 		try {
 			
-			Opcional opcional = obterPorId(idOpcional);
+			Opcional opcional = opcionalDAO.findById(idOpcional);
 			
 			if(opcional == null) {
-				throw new Exception("Opcional inexistente.");
+				throw new Exception("Opcional já foi excluída.");
+			}
+			
+			if(opcional.getAutomoveis().size() > 0) {
+				throw new Exception("Esse opcional possui automoveis vinculados");
 			}
 			
 			opcionalDAO.delete(opcional);
 			
+			return new Mensagem("Opcional excluído.", TipoMensagem.sucesso);
 		}catch(Exception ex) {
-			return new Mensagem("Não foi possível excluir: " 
-					+ ex.getMessage(), MensagemStatus.erro);
+			return new Mensagem("Erro inesperado: "
+					+ ex.getMessage(), TipoMensagem.erro);
 		}
 		
-		return new Mensagem("Excluído com sucesso.",
-				MensagemStatus.sucesso);
-		
 	}
 
-	public Opcional obterPorId(Short idOpcional) {
-		return opcionalDAO.findById(idOpcional);
-	}
-
-
-	public List<Opcional> obterTodos() {
+	@Override
+	public List<Opcional> listar() {
 		return opcionalDAO.findAll();
 	}
+
 }

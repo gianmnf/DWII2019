@@ -4,11 +4,11 @@ import javax.persistence.*;
 
 @Entity
 public class Usuario {
+
 	
 	@Id
-	//Não usar a coluna na inserção
-	@Column(name="idPessoaUsuario", insertable = false, updatable = false)
-	// Não é auto incremento - não usa generated value
+	@Column(name="idPessoaUsuario",
+		insertable = false, updatable = false)
 	private Integer idPessoaUsuario;
 	
 	private String login;
@@ -16,9 +16,9 @@ public class Usuario {
 	private String senha;
 	
 	@OneToOne
-	@JoinColumn(name="idPessoaUsuario", referencedColumnName="idPessoaFuncionario")
+	@JoinColumn(name="idPessoaUsuario",
+			referencedColumnName="idPessoaFuncionario")
 	private Funcionario funcionario;
-	
 
 	public Integer getIdPessoaUsuario() {
 		return idPessoaUsuario;

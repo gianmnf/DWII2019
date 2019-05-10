@@ -1,18 +1,18 @@
 package locadora.diurno.controller;
 
-import javax.enterprise.context.*;		
-import javax.ejb.*;
+import java.util.List;
 
-import locadora.diurno.bll.interfaces.*;
-import locadora.diurno.dal.entidade.*;
+import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+import javax.inject.Named;
 
-import javax.inject.*;
-
-import java.util.*;
-
-import locadora.diurno.bll.util.*;
-import javax.faces.context.*;
-import javax.faces.application.*;
+import locadora.diurno.bll.interfaces.ICorEJB;
+import locadora.diurno.bll.util.Mensagem;
+import locadora.diurno.bll.util.TipoMensagem;
+import locadora.diurno.dal.entidade.Cor;
 
 @Named
 @RequestScoped
@@ -30,45 +30,57 @@ public class CorController {
 		this.cor = new Cor();
 	}
 	
-	//Editar
-	public void editar(Cor cor) {
-		this.cor = cor;
-	}
-		
-	//Excluir
-	public void excluir(Short idCor) {
-		Mensagem msg = corEJB.excluir(idCor);
-		if(msg.getStatus() == MensagemStatus.sucesso) {
-			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, msg.getTexto(), null));
-		}else {
-			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg.getTexto(), null));
-		}
-	}
-	
-	
 	public void salvar() {
 		
 		Mensagem msg = corEJB.salvar(cor);
 		
-		if(msg.getStatus() == MensagemStatus.sucesso) {
+		if(msg.getTipo() == TipoMensagem.sucesso) {
 			
 			context.addMessage(null, 
 					new FacesMessage(FacesMessage.SEVERITY_INFO,
-							msg.getTexto(), null));
+							msg.getTexto(),null) );
 			
 			this.cor = new Cor();
 			
 		}else {
 			context.addMessage(null, 
 					new FacesMessage(FacesMessage.SEVERITY_ERROR,
-							msg.getTexto(), null));
+							msg.getTexto(),null) );
 		}
-	}
-	
-	public List<Cor> todos(){
-		return corEJB.obterTodos();
+		
 	}
 
+	public List<Cor> todos(){
+		return corEJB.listar();
+	}
+	
+	public void editar(Cor cor) {
+		this.cor = cor;
+	}
+	
+	
+	public void excluir(Short idCor) {
+		
+		Mensagem msg = corEJB.excluir(idCor);
+		
+		if(msg.getTipo() == TipoMensagem.sucesso) {
+			
+			context.addMessage(null, 
+					new FacesMessage(FacesMessage.SEVERITY_INFO,
+							msg.getTexto(),null) );
+			
+		}else {
+			context.addMessage(null, 
+					new FacesMessage(FacesMessage.SEVERITY_ERROR,
+							msg.getTexto(),null) );
+		}
+		
+		
+	}
+
+	
+	
+	
 	public Cor getCor() {
 		return cor;
 	}
@@ -76,5 +88,7 @@ public class CorController {
 	public void setCor(Cor cor) {
 		this.cor = cor;
 	}
-
+	
+	
+	
 }

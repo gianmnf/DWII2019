@@ -1,12 +1,16 @@
 package locadora.diurno.dal.dao;
 
-import locadora.diurno.dal.dao.interfaces.*;			
-import locadora.diurno.dal.entidade.*;
-import locadora.diurno.dal.generics.*;
+import javax.enterprise.context.RequestScoped;
 
-import javax.enterprise.context.*;
+import locadora.diurno.dal.dao.interfaces.IOpcionalDAO;
+import locadora.diurno.dal.entidade.Opcional;
+import locadora.diurno.dal.generics.JPAGenericDAO;
 
 @RequestScoped
-public class OpcionalDAO extends JPAGenericDAO<Opcional, Short> implements IOpcionalDAO{
+public class OpcionalDAO 
+	extends JPAGenericDAO<Opcional, Short>
+	implements IOpcionalDAO{
 
+
+	
 }

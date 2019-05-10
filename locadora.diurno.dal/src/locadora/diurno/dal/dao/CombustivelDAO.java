@@ -1,13 +1,17 @@
 package locadora.diurno.dal.dao;
 
-import locadora.diurno.dal.dao.interfaces.*;			
-import locadora.diurno.dal.entidade.*;
-import locadora.diurno.dal.generics.*;
 
-import javax.enterprise.context.*;
+import javax.enterprise.context.RequestScoped;
+
+import locadora.diurno.dal.dao.interfaces.ICombustivelDAO;
+import locadora.diurno.dal.entidade.Combustivel;
+import locadora.diurno.dal.generics.JPAGenericDAO;
 
 @RequestScoped
-public class CombustivelDAO extends JPAGenericDAO<Combustivel, Short>
-implements ICombustivelDAO{
+public class CombustivelDAO 
+	extends JPAGenericDAO<Combustivel, Short>
+	implements ICombustivelDAO{
 
+
+	
 }

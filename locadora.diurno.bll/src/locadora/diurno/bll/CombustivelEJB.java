@@ -1,64 +1,68 @@
 package locadora.diurno.bll;
 
-import locadora.diurno.bll.interfaces.*;				
-import locadora.diurno.bll.util.*;
-import locadora.diurno.dal.dao.interfaces.ICombustivelDAO;
-import locadora.diurno.dal.entidade.*;
-import java.util.*;
+import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
+import locadora.diurno.bll.interfaces.ICombustivelEJB;
+import locadora.diurno.bll.util.Mensagem;
+import locadora.diurno.bll.util.TipoMensagem;
+import locadora.diurno.dal.dao.interfaces.ICombustivelDAO;
+import locadora.diurno.dal.entidade.Combustivel;
+
 @Stateless
 public class CombustivelEJB implements ICombustivelEJB{
+
 	@Inject
 	private ICombustivelDAO combustivelDAO;
 	
 	@Override
 	public Mensagem salvar(Combustivel combustivel) {
-
-		try {
-			combustivelDAO.insertOrUpdate(combustivel);
-		}catch(Exception ex) {
-			return new Mensagem("Ocorreu um erro inesperado: " 
-						+ ex.getMessage(),MensagemStatus.erro);
-		}
 		
-		return new Mensagem("Salvo com sucesso.", MensagemStatus.sucesso);
+		try {
+			
+			combustivelDAO.insertOrUpdate(combustivel);
+			
+			return new Mensagem("Salvo com sucesso.",
+					TipoMensagem.sucesso);
+			
+		}catch(Exception ex) {
+			
+			return new Mensagem("Erro inesperado: " 
+					+ ex.getMessage(), TipoMensagem.erro);
+			
+		}
 	}
 
 	@Override
 	public Mensagem excluir(Short idCombustivel) {
 		
-		
 		try {
 			
-			Combustivel combustivel = obterPorId(idCombustivel);
+			Combustivel combustivel = combustivelDAO.findById(idCombustivel);
 			
 			if(combustivel == null) {
-				throw new Exception("Combustivel inexistente.");
+				throw new Exception("Combustivel já foi excluído.");
+			}
+			
+			if(combustivel.getAutomoveis().size() > 0) {
+				throw new Exception("Essa combustivel possui autmoveis vinculados");
 			}
 			
 			combustivelDAO.delete(combustivel);
 			
+			return new Mensagem("Combustivel excluído.", TipoMensagem.sucesso);
 		}catch(Exception ex) {
-			return new Mensagem("Não foi possível excluir: " 
-					+ ex.getMessage(), MensagemStatus.erro);
+			return new Mensagem("Erro inesperado: "
+					+ ex.getMessage(), TipoMensagem.erro);
 		}
 		
-		return new Mensagem("Excluído com sucesso.",
-				MensagemStatus.sucesso);
-		
 	}
 
 	@Override
-	public Combustivel obterPorId(Short idCombustivel) {
-		return combustivelDAO.findById(idCombustivel);
-	}
-
-
-	@Override
-	public List<Combustivel> obterTodos() {
+	public List<Combustivel> listar() {
 		return combustivelDAO.findAll();
 	}
+
 }

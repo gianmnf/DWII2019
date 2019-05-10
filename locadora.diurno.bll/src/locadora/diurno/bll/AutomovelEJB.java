@@ -1,64 +1,66 @@
 package locadora.diurno.bll;
 
-import locadora.diurno.bll.interfaces.*;				
-import locadora.diurno.bll.util.*;
-import locadora.diurno.dal.dao.interfaces.IAutomovelDAO;
-import locadora.diurno.dal.entidade.*;
-import java.util.*;
+import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
+import locadora.diurno.bll.interfaces.IAutomovelEJB;
+import locadora.diurno.bll.util.Mensagem;
+import locadora.diurno.bll.util.TipoMensagem;
+import locadora.diurno.dal.dao.interfaces.IAutomovelDAO;
+import locadora.diurno.dal.entidade.Automovel;
+
 @Stateless
 public class AutomovelEJB implements IAutomovelEJB{
+
 	@Inject
 	private IAutomovelDAO automovelDAO;
 	
 	@Override
 	public Mensagem salvar(Automovel automovel) {
-
-		try {
-			automovelDAO.insertOrUpdate(automovel);
-		}catch(Exception ex) {
-			return new Mensagem("Ocorreu um erro inesperado: " 
-						+ ex.getMessage(),MensagemStatus.erro);
-		}
 		
-		return new Mensagem("Salvo com sucesso.", MensagemStatus.sucesso);
+		try {
+		
+			automovelDAO.insertOrUpdate(automovel);
+			
+			return new Mensagem("Salvo com sucesso.",
+					TipoMensagem.sucesso);
+			
+		}catch(Exception ex) {
+			
+			return new Mensagem("Erro inesperado: " 
+					+ ex.getMessage(), TipoMensagem.erro);
+			
+		}
 	}
 
 	@Override
-	public Mensagem excluir(Short idAutomovel) {
-		
+	public Mensagem excluir(Integer idAutomovel) {
 		
 		try {
 			
-			Automovel automovel = obterPorId(idAutomovel);
+			Automovel automovel = automovelDAO.findById(idAutomovel);
 			
 			if(automovel == null) {
-				throw new Exception("Automovel inexistente.");
+				throw new Exception("Automovel já foi excluído.");
 			}
+			
+	
 			
 			automovelDAO.delete(automovel);
 			
+			return new Mensagem("Automovel excluído.", TipoMensagem.sucesso);
 		}catch(Exception ex) {
-			return new Mensagem("Não foi possível excluir: " 
-					+ ex.getMessage(), MensagemStatus.erro);
+			return new Mensagem("Erro inesperado: "
+					+ ex.getMessage(), TipoMensagem.erro);
 		}
 		
-		return new Mensagem("Excluído com sucesso.",
-				MensagemStatus.sucesso);
-		
 	}
 
 	@Override
-	public Automovel obterPorId(Short idAutomovel) {
-		return automovelDAO.findById(idAutomovel);
-	}
-
-
-	@Override
-	public List<Automovel> obterTodos() {
+	public List<Automovel> listar() {
 		return automovelDAO.findAll();
 	}
+
 }

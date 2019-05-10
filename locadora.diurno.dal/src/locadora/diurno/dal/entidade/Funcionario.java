@@ -3,18 +3,15 @@ package locadora.diurno.dal.entidade;
 import javax.persistence.*;
 
 @Entity
-//Herdando de pessoa
-@Inheritance(strategy= InheritanceType.JOINED)
-//Inserindo F no tipo
 @DiscriminatorValue(value = "F")
-//PFK
-@PrimaryKeyJoinColumn(name="idPessoaFuncionario", referencedColumnName="idPessoa")
-public class Funcionario extends Pessoa{
+@PrimaryKeyJoinColumn(name = "idPessoaFuncionario",
+		referencedColumnName="idPessoa")
+public class Funcionario extends Pessoa {
+
 	private Double salario;
 	
-	//Sempre que excluir funcionario, excluir usuario
-	@OneToOne(mappedBy = "funcionario",cascade = CascadeType.ALL)
-	//Não tem Join Column pois não tem chave estrangeira
+	@OneToOne(mappedBy = "funcionario",
+			cascade = CascadeType.ALL)
 	private Usuario usuario;
 
 	public Double getSalario() {
@@ -34,6 +31,4 @@ public class Funcionario extends Pessoa{
 	}
 	
 	
-	
 }
-	

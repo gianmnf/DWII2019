@@ -4,17 +4,19 @@ import javax.persistence.*;
 
 @Entity
 public class LocacaoAutomovel {
-	//Chave primaria(Composta) - unico objeto que representa a chave
+
 	@EmbeddedId
 	private LocacaoAutomovelPk id;
+	
 	private Double valor;
+	
 	@ManyToOne
-	@JoinColumn(name="idAutomovel")
+	@JoinColumn(name = "idAutomovel")
 	@MapsId("idAutomovel")
 	private Automovel automovel;
 	
 	@ManyToOne
-	@JoinColumn(name="idLocacao")
+	@JoinColumn(name = "idLocacao")
 	@MapsId("idLocacao")
 	private Locacao locacao;
 
@@ -74,6 +76,8 @@ public class LocacaoAutomovel {
 			return false;
 		return true;
 	}
+	
+	
 	
 	
 }

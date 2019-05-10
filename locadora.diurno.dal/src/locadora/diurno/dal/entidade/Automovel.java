@@ -1,6 +1,7 @@
 package locadora.diurno.dal.entidade;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 import java.util.*;
 
@@ -11,22 +12,29 @@ public class Automovel {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idAutomovel;
 	
+	@NotNull(message="Informe o ano")
 	private Integer ano;
 	
+	@NotNull(message="Informe o valor")
 	private Double valor;
 	
+	@NotNull(message="Informe a quantidade de portas")
+	@Min(value = 1, message="Quantidade de portas inválida.")
 	private Short quantidadePortas;
 	
 	@ManyToOne
 	@JoinColumn(name = "idCor")
+	@NotNull(message="Informe a cor")
 	private Cor cor;
 	
 	@ManyToOne
 	@JoinColumn(name = "idModelo")
+	@NotNull(message="Informe o modelo")
 	private Modelo modelo;
 	
 	@ManyToOne
 	@JoinColumn(name = "idCombustivel")
+	@NotNull(message="Informe o combustivel")
 	private Combustivel combustivel;
 	
 	
@@ -35,9 +43,20 @@ public class Automovel {
 			joinColumns = @JoinColumn(name = "idAutomovel"),
 			inverseJoinColumns = @JoinColumn(name = "idOpcional"))
 	private List<Opcional> opcionais;
-
+	
 	@OneToMany(mappedBy = "automovel")
 	private List<LocacaoAutomovel> locacaoAutomoveis;
+
+	
+	public List<LocacaoAutomovel> getLocacaoAutomoveis() {
+		return locacaoAutomoveis;
+	}
+
+
+	public void setLocacaoAutomoveis(List<LocacaoAutomovel> locacaoAutomoveis) {
+		this.locacaoAutomoveis = locacaoAutomoveis;
+	}
+
 
 	public Integer getIdAutomovel() {
 		return idAutomovel;

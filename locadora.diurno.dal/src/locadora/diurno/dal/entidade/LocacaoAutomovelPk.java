@@ -1,11 +1,13 @@
 package locadora.diurno.dal.entidade;
 
 import javax.persistence.*;
-//Para embutir - não é entidade - isolada
+
 @Embeddable
 public class LocacaoAutomovelPk {
+
 	private Integer idLocacao;
 	private Integer idAutomovel;
+	
 	public Integer getIdLocacao() {
 		return idLocacao;
 	}
@@ -47,5 +49,7 @@ public class LocacaoAutomovelPk {
 			return false;
 		return true;
 	}
+	
+	
 	
 }

@@ -19,6 +19,17 @@ public class Pessoa {
 	
 	private Long cpf;
 	
+	@Transient
+	private String cpfMascara;
+	
+	public String getCpfMascara() {
+		return cpfMascara;
+	}
+
+	public void setCpfMascara(String cpfMascara) {
+		this.cpfMascara = cpfMascara;
+	}
+
 	@Temporal(TemporalType.DATE)
 	private Date dataNascimento;
 	

@@ -6,6 +6,8 @@ import locadora.diurno.dal.generics.*;
 import javax.enterprise.context.*;
 
 @RequestScoped
-public class FuncionarioDAO extends JPAGenericDAO<Funcionario, Integer>{
+public class FuncionarioDAO
+	extends JPAGenericDAO<Funcionario, Integer>
+	implements IFuncionarioDAO{
 
 }

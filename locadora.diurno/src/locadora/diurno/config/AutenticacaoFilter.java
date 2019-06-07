@@ -1,6 +1,7 @@
 package locadora.diurno.config;
 
 import java.io.*;
+import javax.inject.Inject;
 import javax.servlet.*;
 import javax.servlet.annotation.*;
 import javax.servlet.http.*;
@@ -9,6 +10,9 @@ import locadora.diurno.controller.*;
 
 @WebFilter(filterName = "AutenticacaoFilter",urlPatterns = {"/*"})
 public class AutenticacaoFilter implements Filter{
+
+	@Inject
+	private AutenticacaoController autenticacaoContorller;
 
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)

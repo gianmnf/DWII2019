@@ -3,6 +3,9 @@ package locadora.diurno.dal.dao;
 import locadora.diurno.dal.generics.*;
 import locadora.diurno.dal.dao.interfaces.*;
 import locadora.diurno.dal.entidade.*;
+
+import java.util.List;
+
 import javax.enterprise.context.*;
 import javax.persistence.*;
 
@@ -17,8 +20,12 @@ public class UsuarioDAO extends JPAGenericDAO<Usuario, Integer>
 		query.setParameter("login", login);
 		query.setParameter("senha", senha);
 		
-		Usuario usuario = query.getSingleResult();
-		return usuario;
+		List<Usuario> usuario = query.getResultList();
+		if(usuario.isEmpty()) {
+			return null;
+		}else {
+		return usuario.get(0);
+		}
 	}
 
 }

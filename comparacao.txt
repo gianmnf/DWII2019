@@ -1,0 +1,7 @@
+Automovel = Produto
+Modelo = Fornecedor
+Cor = Linha
+Marca = Marca
+LocacaoAutomovel = VendaProduto
+Locacao = Venda
+Opcional = Categoria

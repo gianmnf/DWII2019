@@ -20,7 +20,9 @@
 	  				<p:outputLabel value="Senha:" />
 	  				<p:password value="#{autenticacaoController.usuario.senha}" />
 	  				
-	  				<p:commandButton value="Entrar"/>
+	  				<p:commandButton value="Entrar"
+	  				actionListener="#{autenticacaoController.autenticar()}"
+	  				update="@form"/>
 	  			
 	  			</h:panelGrid>
 	  			
